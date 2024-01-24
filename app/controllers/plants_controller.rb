@@ -1,6 +1,12 @@
 class PlantsController < ApplicationController
   def create
-    @plant = Plant.new(review_params)
+    @plant = Plant.new(plant_params)
+
+    if @plant.save
+      redirect_to @garden, notice: "Plant was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private
@@ -8,4 +14,3 @@ class PlantsController < ApplicationController
     params.require(:plant).permit(:name, :image_url)
   end
 end
-§
